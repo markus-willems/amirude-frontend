@@ -82,7 +82,8 @@ class App extends React.Component {
 
   addQuestion(data) {
     this.setState({
-      loading: true
+      loading: true,
+      url: ''
     })
     axios
       .post(`${process.env.API_HOST}/api/questions/add`, data)
@@ -293,7 +294,7 @@ class App extends React.Component {
         </div>
       )
     } else {
-      return 
+      return
     }
   }
 
