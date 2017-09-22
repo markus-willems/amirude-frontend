@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 import TextareaAutosize from 'react-textarea-autosize'
+import emoji from 'node-emoji'
 import { getHashFromWindowLocation } from './utils/'
 
 const initialState = {
@@ -135,7 +136,7 @@ class App extends React.Component {
   handleQuestionInputChange(e) {
     if (e.target.value.length <= MAX_QUESTION_LENGTH) {
       this.setState({
-        question: e.target.value
+        question: emoji.emojify(e.target.value)
       })
     }
   }
