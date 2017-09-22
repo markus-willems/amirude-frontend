@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { getHashFromWindowLocation } from './utils/'
 
 const initialState = {
-  loading: true,
+  loading: false,
   question: '',
   currentQuestionId: null,
   randomQuestion: {},
@@ -81,11 +81,15 @@ class App extends React.Component {
   }
 
   addQuestion(data) {
+    this.setState({
+      loading: true
+    })
     axios
       .post(`${process.env.API_HOST}/api/questions/add`, data)
       .then(res => {
         this.setState({
-          url: `${window.location.origin}/#q/${res.data}`
+          url: `${window.location.origin}/#q/${res.data}`,
+          loading: false
         })
       })
       .catch(err => {
@@ -118,7 +122,8 @@ class App extends React.Component {
 
   handleFormSubmit(e) {
     this.addQuestion({
-      question: this.state.question
+      question: this.state.question,
+      loading: true
     })
     this.setState({
       question: ''
@@ -276,17 +281,20 @@ class App extends React.Component {
   }
 
   renderLink() {
-    if (!this.state.url) {
-      return
+    if (!this.state.url && this.state.loading) {
+      return <div>Loading...</div>
+    } else if (this.state.url) {
+      return (
+        <div>
+          Link to question:{' '}
+          <a target="_blank" href={this.state.url}>
+            {this.state.url}
+          </a>
+        </div>
+      )
+    } else {
+      return 
     }
-    return (
-      <div>
-        Link to question:{' '}
-        <a target="_blank" href={this.state.url}>
-          {this.state.url}
-        </a>
-      </div>
-    )
   }
 
   render() {
