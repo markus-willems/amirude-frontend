@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import axios from 'axios'
 import TextareaAutosize from 'react-textarea-autosize'
 import emoji from 'node-emoji'
-import { getHashFromWindowLocation } from './utils/'
+import { getHashFromWindowLocation, getQuestionLength } from './utils/'
 
 const initialState = {
   loading: false,
@@ -134,7 +134,7 @@ class App extends React.Component {
   }
 
   handleQuestionInputChange(e) {
-    if (e.target.value.length <= MAX_QUESTION_LENGTH) {
+    if (getQuestionLength(e.target.value) <= MAX_QUESTION_LENGTH) {
       this.setState({
         question: emoji.emojify(e.target.value)
       })
@@ -213,7 +213,7 @@ class App extends React.Component {
           </label>
           <input type="submit" value="Add" />
           <span>
-            {this.state.question.length}
+            {getQuestionLength(this.state.question)}
             {'/'}
             {MAX_QUESTION_LENGTH}
           </span>
