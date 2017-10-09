@@ -5,6 +5,8 @@ import TextareaAutosize from 'react-textarea-autosize'
 import emoji from 'node-emoji'
 import { getHashFromWindowLocation, getQuestionLength } from './utils/'
 
+import './assets/css/styles.css'
+
 const initialState = {
   loading: false,
   question: '',
@@ -123,13 +125,15 @@ class App extends React.Component {
   }
 
   handleFormSubmit(e) {
-    this.addQuestion({
-      question: this.state.question,
-      loading: true
-    })
-    this.setState({
-      question: ''
-    })
+    if (this.state.question) {
+      this.addQuestion({
+        question: this.state.question,
+        loading: true
+      })
+      this.setState({
+        question: ''
+      })
+    }
     e.preventDefault()
   }
 
@@ -183,44 +187,111 @@ class App extends React.Component {
 
   renderInit() {
     return (
-      <div>
-        <input
-          type="button"
-          value="Rate!"
-          onClick={() => this.handleActionClick('rate')}
-        />{' '}
-        <input
-          type="button"
-          value="Submit!"
-          onClick={() => this.handleActionClick('submit')}
-        />
+      <div className="fullwidth">
+        <div className="row about">
+          <div className="cell">
+            <h1 className="about__headline">
+              <span>Am I rude?!</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row about">
+          <div className="cell">
+            <div className="about__text margin-top-bottom">
+              <p>
+                Not sure if you're coming along a bit rude when asking someone a
+                question on Twitter?
+              </p>
+              <p>
+                Say no more! Submit it here first (anonymously!) and let others
+                decide how rude you really sound!
+              </p>
+              <p>Furthermore, help others and rate their rudeness ❤️.</p>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="cell">
+            <input
+              className="btn btn--primary"
+              type="button"
+              value="Rate!"
+              onClick={() => this.handleActionClick('rate')}
+              style={{ marginRight: '15px' }}
+            />
+          </div>
+          <div className="cell">
+            <input
+              className="btn btn--primary"
+              type="button"
+              value="Submit!"
+              onClick={() => this.handleActionClick('submit')}
+            />
+          </div>
+        </div>
       </div>
     )
   }
 
   renderForm() {
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <label>
-            Question:
-            <TextareaAutosize
-              name="question"
-              style={{ minHeight: '80px', resize: 'none' }}
-              value={this.state.question}
-              onChange={this.handleQuestionInputChange}
-            />
-          </label>
-          <input type="submit" value="Add" />
-          <span>
-            {getQuestionLength(this.state.question)}
-            {'/'}
-            {MAX_QUESTION_LENGTH}
-          </span>
-          {this.renderLink()}
-        </form>
-        <div>
-          <input type="button" value="Back!" onClick={this.resetState} />
+      <div className="fullwidth">
+        <div className="row about">
+          <div className="cell">
+            <h1 className="about__headline">
+              <span>Am I rude?!</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="cell">
+            <form onSubmit={this.handleFormSubmit}>
+              <div className="row">
+                <div className="cell">Your question:</div>
+              </div>
+              <div className="row">
+                <div className="cell">
+                  <TextareaAutosize
+                    className="textarea"
+                    name="question"
+                    style={{ minHeight: '80px', resize: 'none' }}
+                    value={this.state.question}
+                    onChange={this.handleQuestionInputChange}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div
+                  className="cell right margin-top-bottom"
+                  style={{ marginTop: '0' }}
+                >
+                  <span>
+                    {getQuestionLength(this.state.question)}
+                    {'/'}
+                    {MAX_QUESTION_LENGTH}
+                  </span>
+                </div>
+              </div>
+              {this.renderLink()}
+              <div className="row">
+                <div className="cell">
+                  <input
+                    className="btn btn--primary"
+                    type="submit"
+                    value="Add!"
+                  />
+                </div>
+                <div className="cell right">
+                  <input
+                    className="btn"
+                    type="button"
+                    value="Back"
+                    onClick={this.resetState}
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     )
@@ -228,14 +299,44 @@ class App extends React.Component {
 
   renderQuestionFromHash() {
     return (
-      <div key={this.state.questionFromHash.id}>
-        <div>Question: {this.state.questionFromHash.question}</div>
-        <div>
-          <span>Upvotes: {this.state.questionFromHash.upvotes}</span> |{' '}
-          <span>Downvotes: {this.state.questionFromHash.downvotes}</span>
+      <div className="fullwidth">
+        <div className="row about">
+          <div className="cell">
+            <h1 className="about__headline">
+              <span>Am I rude?!</span>
+            </h1>
+          </div>
         </div>
-        <div>
-          <input type="button" value="Back!" onClick={this.resetState} />
+        <div className="row">
+          <div className="cell">Question:</div>
+        </div>
+        <div className="row">
+          <div className="cell">
+            <div className="question">
+              {this.state.questionFromHash.question}
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="cell center margin-top-bottom">
+            <span className="votes">
+              Upvotes: {this.state.questionFromHash.upvotes}
+            </span>
+            <span className="votes margin-left-right">|</span>
+            <span className="votes">
+              Downvotes: {this.state.questionFromHash.downvotes}
+            </span>
+          </div>
+        </div>
+        <div className="row">
+          <div className="cell right">
+            <input
+              className="btn"
+              type="button"
+              value="Back"
+              onClick={this.resetState}
+            />
+          </div>
         </div>
       </div>
     )
@@ -246,37 +347,79 @@ class App extends React.Component {
       return <div>Loading...</div>
     }
     return (
-      <div key={this.state.randomQuestion.id}>
-        <div>Question: {this.state.randomQuestion.question}</div>
+      <div className="fullwidth">
+        <div className="row about">
+          <div className="cell">
+            <h1 className="about__headline">
+              <span>Am I rude?!</span>
+            </h1>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="cell">Question:</div>
+        </div>
+        <div className="row">
+          <div className="cell">
+            <div className="question">{this.state.randomQuestion.question}</div>
+          </div>
+        </div>
         {this.state.voted && (
-          <div>
-            <span>Upvotes: {this.state.randomQuestion.upvotes}</span> |{' '}
-            <span>Downvotes: {this.state.randomQuestion.downvotes}</span>
+          <div className="row">
+            <div className="cell center margin-top-bottom">
+              <span className="votes">
+                Upvotes: {this.state.randomQuestion.upvotes}
+              </span>
+              <span className="votes margin-left-right">|</span>
+              <span className="votes">
+                Downvotes: {this.state.randomQuestion.downvotes}
+              </span>
+            </div>
           </div>
         )}
-        <input
-          type="submit"
-          value="Upvote"
-          disabled={this.state.voted}
-          onClick={() => this.handleVoteClick('upvote')}
-        />
-        <input
-          type="submit"
-          value="Downvote"
-          disabled={this.state.voted}
-          onClick={() => this.handleVoteClick('downvote')}
-        />
+        {!this.state.voted && (
+          <div className="row margin-top-bottom">
+            <div className="cell">
+              <input
+                className="btn btn--primary"
+                type="submit"
+                value="Upvote"
+                disabled={this.state.voted}
+                onClick={() => this.handleVoteClick('upvote')}
+              />
+            </div>
+            <div className="cell">
+              <input
+                className="btn btn--primary"
+                type="submit"
+                value="Downvote"
+                disabled={this.state.voted}
+                onClick={() => this.handleVoteClick('downvote')}
+              />
+            </div>
+          </div>
+        )}
         {this.state.voted && (
-          <div>
+          <div className="row">
+            <div className="cell">
+              <input
+                className="btn btn--primary"
+                type="button"
+                value="Rate another!"
+                onClick={() => this.handleActionClick('rate')}
+              />
+            </div>
+          </div>
+        )}
+        <div className="row">
+          <div className="cell right">
             <input
+              className="btn"
               type="button"
-              value="Rate another!"
-              onClick={() => this.handleActionClick('rate')}
+              value="Back"
+              onClick={this.resetState}
             />
           </div>
-        )}
-        <div>
-          <input type="button" value="Back!" onClick={this.resetState} />
         </div>
       </div>
     )
@@ -284,14 +427,20 @@ class App extends React.Component {
 
   renderLink() {
     if (!this.state.url && this.state.loading) {
-      return <div>Loading...</div>
+      return <div>Submitting...</div>
     } else if (this.state.url) {
       return (
-        <div>
-          Link to question:{' '}
-          <a target="_blank" href={this.state.url}>
-            {this.state.url}
-          </a>
+        <div className="margin-top-bottom">
+          <div className="row">
+            <div className="cell">Link to your question:</div>
+          </div>
+          <div className="row margin-top-bottom">
+            <div className="cell">
+              <a className="url" target="_blank" href={this.state.url}>
+                {this.state.url}
+              </a>
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -302,16 +451,17 @@ class App extends React.Component {
   render() {
     if (!this.state.fromLink) {
       return (
-        <div>
+        <div className="container">
           {!this.state.rateQuestion &&
-          !this.state.submitQuestion && <div>{this.renderInit()}</div>}
-          {this.state.rateQuestion && <div>{this.renderRandomQuestion()}</div>}
-          {this.state.submitQuestion && <div>{this.renderForm()}</div>}
+            !this.state.submitQuestion &&
+            this.renderInit()}
+          {this.state.rateQuestion && this.renderRandomQuestion()}
+          {this.state.submitQuestion && this.renderForm()}
         </div>
       )
     } else {
       return (
-        <div>
+        <div className="container">
           {this.state.questionFromHash && this.renderQuestionFromHash()}
         </div>
       )

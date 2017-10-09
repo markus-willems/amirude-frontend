@@ -1,0 +1,119 @@
+@import url('reset.css');
+
+body {
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+form {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  padding: 15px;
+  justify-content: center;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.about__headline {
+  font-style: italic;
+  font-size: 2rem;
+}
+
+.about__headline span {
+  border-bottom: 5px solid;
+}
+
+.about__text {
+  font-size: 1.2rem;
+}
+
+.question {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.votes {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.margin-top-bottom {
+  margin: 15px 0;
+}
+
+.margin-left-right {
+  margin: 0 15px;
+}
+
+.textarea {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border: 1px solid #bbb;
+}
+
+.btn {
+  display: block;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.btn--default {
+  background-color: #dddddd;
+  color: #333;
+}
+
+.btn--default:hover {
+  background-color: #d3cdcd;
+}
+
+.btn--primary {
+  color: #fff;
+  background-color: #006eff;
+}
+
+.btn--primary:hover {
+  background-color: #0168f0;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  flex-grow: 1;
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.left {
+  justify-content: flex-start;
+}
